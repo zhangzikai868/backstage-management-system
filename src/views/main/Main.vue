@@ -5,11 +5,7 @@
 <script lang="ts">
 import { defineComponent } from "vue"
 
-export default defineComponent({
-  setup() {
-    return {}
-  }
-})
+export default defineComponent({})
 </script>
 
 <style scoped></style>
