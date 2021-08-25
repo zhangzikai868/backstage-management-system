@@ -1,18 +1,18 @@
 <template>
   <div class="login-from">
     <h1>后台管理系统</h1>
-    <el-tabs type="border-card" stretch>
-      <el-tab-pane>
+    <el-tabs type="border-card" stretch v-model="currentTab">
+      <el-tab-pane name="phone">
         <template #label>
           <span><i class="el-icon-mobile-phone"></i> 账号登录</span>
         </template>
         <login-phone-input ref="phoneRef"></login-phone-input>
       </el-tab-pane>
-      <el-tab-pane>
+      <el-tab-pane name="note">
         <template #label>
           <span><i class="el-icon-chat-dot-square"></i> 短信登录</span>
         </template>
-        <login-note-input></login-note-input>
+        <login-note-input ref="noteRef"></login-note-input>
       </el-tab-pane>
     </el-tabs>
     <div class="option">
@@ -36,13 +36,24 @@ export default defineComponent({
   setup() {
     const isKeepPassword = ref(true)
     const phoneRef = ref<InstanceType<typeof LoginPhoneInput>>()
+    const noteRef = ref<InstanceType<typeof LoginNoteInput>>()
+    const currentTab = ref("phone")
+
     const registerClick = () => {
-      phoneRef.value?.phoneLoginAction()
+      // 判断是手机登录还是短信登录
+      if (currentTab.value === "phone") {
+        phoneRef.value?.phoneLoginAction(isKeepPassword.value)
+      } else if (currentTab.value === "note") {
+        console.log(noteRef.value)
+        noteRef.value?.noteLoginAction(isKeepPassword.value)
+      }
     }
     return {
       isKeepPassword,
       registerClick,
-      phoneRef
+      phoneRef,
+      noteRef,
+      currentTab
     }
   },
   components: { LoginPhoneInput, LoginNoteInput }

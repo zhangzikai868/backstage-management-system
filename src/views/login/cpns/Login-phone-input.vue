@@ -5,7 +5,7 @@
         <el-input v-model="phone.name"></el-input>
       </el-form-item>
       <el-form-item label="密&emsp;码" prop="password">
-        <el-input type="password" v-model="phone.password"></el-input>
+        <el-input show-password v-model="phone.password"></el-input>
       </el-form-item>
     </el-form>
   </div>
@@ -13,20 +13,34 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue"
+import { useStore } from "vuex"
 import type { ElForm } from "element-plus"
+
+// 本地缓存
+import localCache from "@/utils/catche"
 
 export default defineComponent({
   setup() {
+    const store = useStore()
     const phone = reactive({
-      name: "",
-      password: ""
+      name: localCache.getCache("name") ?? "",
+      password: localCache.getCache("password") ?? ""
     })
     const formRef = ref<InstanceType<typeof ElForm>>()
     // 账号登录逻辑验证
-    const phoneLoginAction = () => {
+    const phoneLoginAction = (isKeepPassword: boolean) => {
       formRef.value?.validate((valid) => {
         if (valid) {
-          console.log("正在登录!!!")
+          // 1.判断是否需要记住密码
+          if (isKeepPassword) {
+            localCache.setCache("name", phone.name)
+            localCache.setCache("password", phone.password)
+          } else {
+            localCache.deleteCache("name")
+            localCache.deleteCache("password")
+          }
+          // 2.开始进行登录验证
+          store.dispatch("loginStore/phoneLoginAction", { ...phone })
         }
       })
     }
@@ -35,8 +49,8 @@ export default defineComponent({
       name: [
         { required: true, message: "请输入用户名!", trigger: "blur" },
         {
-          pattern: /^[a-z0-9]{8,10}$/,
-          message: "用户名长度为8-10个字母或数字",
+          pattern: /^[a-z0-9]{8,11}$/,
+          message: "用户名长度为8-11个字母或数字",
           trugger: "blur"
         }
       ],

@@ -44,7 +44,7 @@ class ZKRequest {
         if (this.showLoading) {
           this.loading = ElLoading.service({
             lock: true,
-            text: "正在加载数据...",
+            text: "正在登录中~",
             background: "rgba(0, 0, 0, .5)"
           })
         }
@@ -60,7 +60,7 @@ class ZKRequest {
         // 将loading移除
         setTimeout(() => {
           this.loading?.close()
-        }, 1000)
+        }, 200)
         // 虽然请求成功但是没有返回数据
         if (res.data.returnCode === "-1001") {
           console.log("请求失败~,错误信息")
