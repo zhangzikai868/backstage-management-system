@@ -1,16 +1,15 @@
 <template>
-  <div></div>
+  <div>
+    <h2>Not Fount</h2>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue"
 
 export default defineComponent({
-  name: "Dashbiard",
   setup() {
     return {}
   }
 })
 </script>
-
-<style scoped></style>

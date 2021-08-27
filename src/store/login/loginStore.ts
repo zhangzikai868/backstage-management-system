@@ -10,6 +10,8 @@ import {
   requestUserInfoById,
   requestUserMenusByRoleId
 } from "@/service/login/login"
+import { mapMenusToRoutes } from "@/utils/map-menus"
+import router from "@/router"
 
 const loginStore: Module<ILoginStore, IRootStore> = {
   namespaced: true,
@@ -30,6 +32,11 @@ const loginStore: Module<ILoginStore, IRootStore> = {
     },
     changeUserMenus(state, userMenus) {
       state.userMenus = userMenus
+      // 动态添加路由 传入后端返回的内容
+      const routers = mapMenusToRoutes(userMenus)
+      routers.forEach((route) => {
+        router.addRoute("main", route)
+      })
     }
   },
   actions: {

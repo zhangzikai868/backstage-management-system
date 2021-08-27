@@ -8,7 +8,11 @@
         <el-header class="page-header">
           <nav-header @isFold="mainIsFold"></nav-header>
         </el-header>
-        <el-main class="page-main">Main</el-main>
+        <el-main class="page-main">
+          <div class="user-info">
+            <router-view></router-view>
+          </div>
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -94,5 +98,9 @@ export default defineComponent({
   color: #333;
   text-align: center;
   background-color: #f0f2f5;
+  .user-info {
+    background-color: #fff;
+    border-radius: 5px;
+  }
 }
 </style>

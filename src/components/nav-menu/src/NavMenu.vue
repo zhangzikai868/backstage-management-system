@@ -5,7 +5,7 @@
       <span class="title" v-if="!collapse">Vue3+TS</span>
     </div>
     <el-menu
-      :default-active="2"
+      default-active="2"
       class="el-menu-vertical"
       :collapse="collapse"
       background-color="#0c2135"
@@ -47,6 +47,7 @@
 
 <script>
 import { defineComponent, computed } from "vue"
+import { useRouter } from "vue-router"
 import { useStore } from "@/store"
 export default defineComponent({
   props: {
@@ -57,8 +58,14 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
+    const router = useRouter()
     const userMenus = computed(() => store.state.loginStore.userMenus)
-    return { userMenus }
+    const handleMenuItemClick = (item) => {
+      router.push({
+        path: item.url ?? "/not-fount"
+      })
+    }
+    return { userMenus, handleMenuItemClick }
   }
 })
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="department">
-    <h2>department</h2>
+    <h2>角色管理</h2>
   </div>
 </template>
 
