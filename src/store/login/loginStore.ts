@@ -10,7 +10,7 @@ import {
   requestUserInfoById,
   requestUserMenusByRoleId
 } from "@/service/login/login"
-import { mapMenusToRoutes } from "@/utils/map-menus"
+import { mapMenusToRoutes, mapMenusToPermissions } from "@/utils/map-menus"
 import router from "@/router"
 
 const loginStore: Module<ILoginStore, IRootStore> = {
@@ -19,7 +19,8 @@ const loginStore: Module<ILoginStore, IRootStore> = {
     return {
       token: "",
       userInfo: {},
-      userMenus: []
+      userMenus: [],
+      permissions: []
     }
   },
   getters: {},
@@ -37,6 +38,9 @@ const loginStore: Module<ILoginStore, IRootStore> = {
       routers.forEach((route) => {
         router.addRoute("main", route)
       })
+      // 获取用户按钮权限
+      const permissions = mapMenusToPermissions(userMenus)
+      state.permissions = permissions
     }
   },
   actions: {

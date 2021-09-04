@@ -84,7 +84,7 @@ class ZKRequest {
   // 四、封装各种方法
   // 自己封装request请求调用上面实例的request方法
   // 使用的时候传入的config-会和constructor中的config合并
-  request<T>(config: ZKRequestConfig): Promise<T> {
+  request<T = any>(config: ZKRequestConfig): Promise<T> {
     return new Promise((resolve, reject) => {
       // 3.某个方法的拦截器
       // 判断config中interceptors里有没有requestInterceptor
@@ -112,13 +112,13 @@ class ZKRequest {
         })
     })
   }
-  get<T>(config: ZKRequestConfig): Promise<T> {
+  get<T = any>(config: ZKRequestConfig): Promise<T> {
     return this.request<T>({ ...config, method: "GET" })
   }
-  post<T>(config: ZKRequestConfig): Promise<T> {
+  post<T = any>(config: ZKRequestConfig): Promise<T> {
     return this.request<T>({ ...config, method: "POST" })
   }
-  delete<T>(config: ZKRequestConfig): Promise<T> {
+  delete<T = any>(config: ZKRequestConfig): Promise<T> {
     return this.request<T>({ ...config, method: "DELETE" })
   }
 }

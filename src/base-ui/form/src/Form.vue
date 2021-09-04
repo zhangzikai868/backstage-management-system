@@ -1,5 +1,8 @@
 <template>
   <div class="zk-form">
+    <div class="header">
+      <slot name="header"></slot>
+    </div>
     <el-form :label-width="labelWidth">
       <el-row>
         <template v-for="item in fromItems" :key="item.label">
@@ -16,6 +19,8 @@
                   :placeholder="item.placeholder"
                   :show-password="item.type === 'password'"
                   v-bind="item.otherOptions"
+                  :model-value="modelValue[`${item.field}`]"
+                  @update:modelValue="handleValueChange($event, item.field)"
                 ></el-input>
               </template>
               <template v-else-if="item.type === 'select'">
@@ -23,16 +28,27 @@
                   style="width: 100%"
                   :placeholder="item.placeholder"
                   v-bind="item.otherOptions"
+                  :model-value="modelValue[`${item.field}`]"
+                  @update:modelValue="handleValueChange($event, item.field)"
                 >
                   <template v-for="option in item.options" :key="option.value">
-                    <el-option :value="option.value" style="width: 100%">{{
-                      option.title
-                    }}</el-option>
+                    <el-option
+                      :value="option.value"
+                      style="width: 100%"
+                      :model-value="modelValue[`${item.field}`]"
+                      @update:modelValue="handleValueChange($event, item.field)"
+                      >{{ option.title }}</el-option
+                    >
                   </template>
                 </el-select>
               </template>
               <template v-else-if="item.type === 'datepicker'">
-                <el-date-picker v-bind="item.otherOptions" style="width: 100%">
+                <el-date-picker
+                  v-bind="item.otherOptions"
+                  style="width: 100%"
+                  :model-value="modelValue[`${item.field}`]"
+                  @update:modelValue="handleValueChange($event, item.field)"
+                >
                 </el-date-picker>
               </template>
             </el-form-item>
@@ -40,6 +56,9 @@
         </template>
       </el-row>
     </el-form>
+    <div class="footer">
+      <slot name="footer"></slot>
+    </div>
   </div>
 </template>
 
@@ -49,6 +68,10 @@ import { IFormItem } from "../types"
 
 export default defineComponent({
   props: {
+    modelValue: {
+      type: Object,
+      require: true
+    },
     fromItems: {
       type: Array as PropType<IFormItem[]>,
       default: () => []
@@ -72,8 +95,11 @@ export default defineComponent({
       })
     }
   },
-  setup() {
-    return {}
+  setup(props, { emit }) {
+    const handleValueChange = (value: any, field: string) => {
+      emit("update:modelValue", { ...props.modelValue, [field]: value })
+    }
+    return { handleValueChange }
   }
 })
 </script>

@@ -1,6 +1,7 @@
 import { createStore, Store, useStore as vuexUseStore } from "vuex"
 
 import loginStore from "./login/loginStore"
+import system from "./main/system/system"
 import { IRootStore, IStoreType } from "./types"
 
 const store = createStore<IRootStore>({
@@ -13,7 +14,7 @@ const store = createStore<IRootStore>({
   getters: {},
   mutations: {},
   actions: {},
-  modules: { loginStore }
+  modules: { loginStore, system }
 })
 
 // 防止刷新数据消失

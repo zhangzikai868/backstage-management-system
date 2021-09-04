@@ -25,7 +25,13 @@ import {
   ElCol,
   ElSelect,
   ElOption,
-  ElDatePicker
+  ElDatePicker,
+  ElBreadcrumb,
+  ElBreadcrumbItem,
+  ElTable,
+  ElTableColumn,
+  ElPagination,
+  ElImage
 } from "element-plus"
 const components = [
   ElButton,
@@ -51,7 +57,13 @@ const components = [
   ElCol,
   ElSelect,
   ElOption,
-  ElDatePicker
+  ElDatePicker,
+  ElBreadcrumb,
+  ElBreadcrumbItem,
+  ElTable,
+  ElTableColumn,
+  ElPagination,
+  ElImage
 ]
 
 export default function registerElement(app: App): void {

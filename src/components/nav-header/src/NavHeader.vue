@@ -6,7 +6,9 @@
       @click="handleFoldClick"
     ></i>
     <div class="content">
-      <div>面包屑</div>
+      <div>
+        <breadcrumb :breadcrumb="breadcrumb"></breadcrumb>
+      </div>
       <el-dropdown>
         <div class="dropdown">
           <i class="el-icon-s-custom"></i>
@@ -24,8 +26,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue"
-import { useRouter } from "vue-router"
+import { defineComponent, ref, computed } from "vue"
+import { useRouter, useRoute } from "vue-router"
+import { useStore } from "vuex"
+
+import Breadcrumb from "./Breadcrumb.vue"
+import { pathMapBreadcrumbs } from "@/utils/map-menus"
 
 export default defineComponent({
   setup(props, { emit }) {
@@ -40,7 +46,19 @@ export default defineComponent({
         path: "/login"
       })
     }
-    return { isFold, handleFoldClick, goLogin }
+    // 面包屑数据name path
+    // 获取数据和路径
+    const store = useStore()
+    const route = useRoute()
+    const breadcrumb = computed(() => {
+      const useMenus = store.state.loginStore.userMenus
+      const currentPath = route.path
+      return pathMapBreadcrumbs(useMenus, currentPath)
+    })
+    return { isFold, handleFoldClick, goLogin, breadcrumb }
+  },
+  components: {
+    Breadcrumb
   }
 })
 </script>
