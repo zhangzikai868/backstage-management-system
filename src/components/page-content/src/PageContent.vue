@@ -10,7 +10,9 @@
     >
       <!-- 表格header插槽 -->
       <template #headerHandler>
-        <slot name="btnTitle"></slot>
+        <div class="btnTitle" @click="handleNewClick">
+          <slot name="btnTitle"></slot>
+        </div>
       </template>
 
       <template #status="scope">
@@ -35,12 +37,20 @@
         >
         </el-image>
       </template>
-      <template #handler>
+      <template #handler="scope">
         <div class="hander-btns">
-          <el-button icon="el-icon-edit" type="text" size="mini"
+          <el-button
+            icon="el-icon-edit"
+            type="text"
+            size="mini"
+            @click="handleEditClick(scope.row)"
             >编辑</el-button
           >
-          <el-button icon="el-icon-delete" type="text" size="mini"
+          <el-button
+            icon="el-icon-delete"
+            type="text"
+            size="mini"
+            @click="handleDeleteClick(scope.row)"
             >删除</el-button
           >
         </div>
@@ -58,7 +68,6 @@ import { useStore } from "vuex"
 // 按钮权限管理
 // import { usePermission } from "@/hooks/usePermissions"
 import zkTable from "@/base-ui/table/src/Table.vue"
-
 export default defineComponent({
   props: {
     contentTableConfig: {
@@ -70,7 +79,8 @@ export default defineComponent({
       require: true
     }
   },
-  setup(props) {
+  emits: ["newBtnClick", "editBtnClick"],
+  setup(props, { emit }) {
     const store = useStore()
     // 获取操作的权限
     // const isCreate = usePermission(props.pageName, "create")
@@ -79,7 +89,7 @@ export default defineComponent({
     // const isQuery = usePermission(props.pageName, "query")
 
     // 双向绑定pageInfo 分页器中
-    const pageInfo = ref({ currentPage: 0, pageSize: 10 })
+    const pageInfo = ref({ currentPage: 1, pageSize: 10 })
     // 监听pageSize重新发送网络请求
     watch(pageInfo, () => {
       getPageData()
@@ -90,7 +100,7 @@ export default defineComponent({
       store.dispatch("system/getPageListAction", {
         pageName: props.pageName,
         queryInfo: {
-          offset: pageInfo.value.currentPage * pageInfo.value.pageSize,
+          offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
           size: pageInfo.value.pageSize,
           ...queryInfo
         }
@@ -111,13 +121,30 @@ export default defineComponent({
       console.log(value)
     }
 
+    // 删除/编辑/新建操作
+    const handleDeleteClick = (item: any) => {
+      store.dispatch("system/deletePageDataAction", {
+        pageName: props.pageName,
+        id: item.id
+      })
+    }
+    const handleNewClick = () => {
+      emit("newBtnClick")
+    }
+    const handleEditClick = (item: any) => {
+      emit("editBtnClick", item)
+    }
     return {
       dataList,
       dataCount,
       userCount,
       handleSelectionChange,
       getPageData,
-      pageInfo
+      pageInfo,
+      handleDeleteClick,
+      open,
+      handleNewClick,
+      handleEditClick
     }
   },
   components: {

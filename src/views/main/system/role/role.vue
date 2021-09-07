@@ -4,7 +4,17 @@
     <page-content
       :contentTableConfig="contentTableConfig"
       pageName="role"
-    ></page-content>
+      @newBtnClick="handleNewData"
+      @editBtnClick="handleEditData"
+      ><template #btnTitle>
+        <el-button size="mini" type="primary">新建角色</el-button>
+      </template>
+    </page-content>
+    <page-dialog
+      ref="pageDialogRef"
+      :dialogConfig="dialogConfig"
+      pageName="role"
+    ></page-dialog>
   </div>
 </template>
 
@@ -15,14 +25,29 @@ import { PageSearch } from "@/components/page-search"
 import { contentTableConfig } from "./config/content.config"
 import { searchFormConfig } from "./config/search.config"
 
+import PageDialog from "@/components/page-dialog"
+import { dialogConfig } from "./config/dialog.config"
+import { usePageDialog } from "@/hooks/usePageDialog"
+
 export default defineComponent({
   name: "role",
   setup() {
-    return { contentTableConfig, searchFormConfig }
+    const [pageDialogRef, defaultInfo, handleNewData, handleEditData] =
+      usePageDialog()
+    return {
+      contentTableConfig,
+      searchFormConfig,
+      dialogConfig,
+      pageDialogRef,
+      defaultInfo,
+      handleNewData,
+      handleEditData
+    }
   },
   components: {
     PageContent,
-    PageSearch
+    PageSearch,
+    PageDialog
   }
 })
 </script>

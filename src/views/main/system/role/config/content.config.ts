@@ -1,6 +1,6 @@
 export const contentTableConfig = {
   // header标题
-  title: "用户列表",
+  title: "角色管理",
   // 表格是否显示序号
   showIndexColumn: true,
   // 表格行是否可以被选中

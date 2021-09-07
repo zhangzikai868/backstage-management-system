@@ -5,9 +5,10 @@
     </div>
     <el-form :label-width="labelWidth">
       <el-row>
-        <template v-for="item in fromItems" :key="item.label">
+        <template v-for="item in formItems" :key="item.label">
           <el-col v-bind="colLayout">
             <el-form-item
+              v-if="!item.isShow"
               :label="item.label"
               :rules="item.rules"
               :style="itemStyle"
@@ -72,7 +73,7 @@ export default defineComponent({
       type: Object,
       require: true
     },
-    fromItems: {
+    formItems: {
       type: Array as PropType<IFormItem[]>,
       default: () => []
     },

@@ -45,12 +45,14 @@ const loginStore: Module<ILoginStore, IRootStore> = {
   },
   actions: {
     // 手机登录
-    async phoneLoginAction({ commit }, payload: IPhone) {
+    async phoneLoginAction({ commit, dispatch }, payload: IPhone) {
       // 1.实现登录逻辑
       const loginResult = await phoneRequest(payload)
       const { id, token } = loginResult.data
       localCache.setCache("token", token)
       commit("changeToken", token)
+      // 发送初始化的请求 - 完整的role/deportment
+      dispatch("getInitialDataAction", null, { root: true })
 
       // 2.请求用户信息
       const userInfoResult = await requestUserInfoById(id)
@@ -67,10 +69,12 @@ const loginStore: Module<ILoginStore, IRootStore> = {
       // 4.跳转到首页
       route.push("/main")
     },
-    loadLocalLogin({ commit }) {
+    loadLocalLogin({ commit, dispatch }) {
       const token = localCache.getCache("token")
       if (token) {
         commit("changeToken", token)
+        // 发送初始化的请求 - 完整的role/deportment
+        dispatch("getInitialDataAction", null, { root: true })
       }
       const userInfo = localCache.getCache("userInfo")
       if (token) {

@@ -121,6 +121,9 @@ class ZKRequest {
   delete<T = any>(config: ZKRequestConfig): Promise<T> {
     return this.request<T>({ ...config, method: "DELETE" })
   }
+  patch<T = any>(config: ZKRequestConfig): Promise<T> {
+    return this.request<T>({ ...config, method: "PATCH" })
+  }
 }
 
 export default ZKRequest

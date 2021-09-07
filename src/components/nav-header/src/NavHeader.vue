@@ -29,7 +29,7 @@
 import { defineComponent, ref, computed } from "vue"
 import { useRouter, useRoute } from "vue-router"
 import { useStore } from "vuex"
-
+import localCache from "@/utils/catche"
 import Breadcrumb from "./Breadcrumb.vue"
 import { pathMapBreadcrumbs } from "@/utils/map-menus"
 
@@ -42,6 +42,7 @@ export default defineComponent({
       emit("isFold", isFold.value)
     }
     const goLogin = () => {
+      localCache.deleteCache("token")
       router.push({
         path: "/login"
       })

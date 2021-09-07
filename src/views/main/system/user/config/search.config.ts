@@ -15,7 +15,7 @@ export const searchFormConfig = {
     xs: 24
   },
   // from的属性参数
-  fromItems: [
+  formItems: [
     {
       field: "id",
       type: "input",

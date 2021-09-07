@@ -1,7 +1,7 @@
 <template>
   <div class="page-search">
     <!-- search搜索区域内容 -->
-    <zk-from v-bind="searchFormConfig" v-model="formDate">
+    <zk-form v-bind="searchFormConfig" v-model="formDate">
       <template #header>
         <h2 class="header">高级检索</h2>
       </template>
@@ -15,13 +15,13 @@
           >
         </div>
       </template>
-    </zk-from>
+    </zk-form>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from "vue"
-import zkFrom from "@/base-ui/form"
+import zkForm from "@/base-ui/form"
 export default defineComponent({
   props: {
     searchFormConfig: {
@@ -52,7 +52,7 @@ export default defineComponent({
     return { formDate, removeClick, handleSearch }
   },
   components: {
-    zkFrom
+    zkForm
   }
 })
 </script>

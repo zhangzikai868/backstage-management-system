@@ -1,6 +1,6 @@
 export const searchFormConfig = {
   // from的属性参数
-  fromItems: [
+  formItems: [
     { field: "id", type: "input", label: "ID", placeholder: "请输入ID" },
     {
       field: "name",
