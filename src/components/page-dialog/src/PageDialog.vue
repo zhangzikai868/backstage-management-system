@@ -8,6 +8,7 @@
       destroy-on-close
     >
       <zk-form v-bind="dialogConfig" v-model="formData"></zk-form>
+      <slot></slot>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="centerDialogVisible = false">取 消</el-button>
@@ -38,6 +39,10 @@ export default defineComponent({
     pageName: {
       type: String,
       retuire: true
+    },
+    otherInfo: {
+      type: Object,
+      default: () => ({})
     }
   },
   setup(props) {
@@ -61,14 +66,14 @@ export default defineComponent({
         // 有值 - 编辑
         store.dispatch("system/editPageDataAction", {
           pageName: props.pageName,
-          editData: { ...formData.value },
+          editData: { ...formData.value, ...props.otherInfo },
           id: props.defaultInfo.id
         })
       } else {
         // 没值 - 新建
         store.dispatch("system/createPageDataAction", {
           pageName: props.pageName,
-          newData: { ...formData.value }
+          newData: { ...formData.value, ...props.otherInfo }
         })
       }
     }

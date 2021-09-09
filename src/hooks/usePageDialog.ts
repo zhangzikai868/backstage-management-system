@@ -1,12 +1,12 @@
 import { ref } from "vue"
 import PageDialog from "@/components/page-dialog"
-type CallBackType = () => void
+type CallBackType = (item?: any) => void
 export function usePageDialog(
   newCallback?: CallBackType,
   editCallback?: CallBackType
 ) {
   const pageDialogRef = ref<InstanceType<typeof PageDialog>>()
-  const defaultInfo = ref()
+  const defaultInfo = ref({})
   const handleNewData = () => {
     if (pageDialogRef.value) {
       defaultInfo.value = {}
@@ -19,7 +19,7 @@ export function usePageDialog(
     if (pageDialogRef.value) {
       pageDialogRef.value.centerDialogVisible = true
     }
-    editCallback && editCallback()
+    editCallback && editCallback(item)
   }
   return [pageDialogRef, defaultInfo, handleNewData, handleEditData]
 }

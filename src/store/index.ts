@@ -2,6 +2,7 @@ import { createStore, Store, useStore as vuexUseStore } from "vuex"
 
 import loginStore from "./login/loginStore"
 import system from "./main/system/system"
+import dashboardModule from "./main/dashboard/dashboard"
 import { IRootStore, IStoreType } from "./types"
 
 import { getPageListDate } from "@/service/main/system/system"
@@ -9,7 +10,8 @@ const store = createStore<IRootStore>({
   state() {
     return {
       entirDepartment: [],
-      entireRole: []
+      entireRole: [],
+      entirMenuList: []
     }
   },
   getters: {},
@@ -19,6 +21,9 @@ const store = createStore<IRootStore>({
     },
     changeEntireRole(store, value) {
       store.entireRole = value
+    },
+    changeEntirMenuList(store, value) {
+      store.entirMenuList = value
     }
   },
   actions: {
@@ -35,12 +40,18 @@ const store = createStore<IRootStore>({
         size: 1000
       })
       const { list: roleList } = roleResule.data
+
+      // 请求完整的权限菜单数据
+      const menuResult = await getPageListDate("/menu/list", {})
+      const { list: menuList } = menuResult.data
+
       // 2.保存数据
       commit("changeEntirDepartment", departmentList)
       commit("changeEntireRole", roleList)
+      commit("changeEntirMenuList", menuList)
     }
   },
-  modules: { loginStore, system }
+  modules: { loginStore, system, dashboardModule }
 })
 
 // 防止刷新数据消失

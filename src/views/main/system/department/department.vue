@@ -1,7 +1,5 @@
 <template>
-  <div class="department">
-    <h2>部门管理</h2>
-  </div>
+  <div class="department"></div>
 </template>
 
 <script lang="ts">
@@ -9,6 +7,7 @@ import { defineComponent } from "vue"
 
 export default defineComponent({
   name: "department",
+  components: {},
   setup() {
     return {}
   }

@@ -32,7 +32,9 @@ import {
   ElTableColumn,
   ElPagination,
   ElImage,
-  ElDialog
+  ElDialog,
+  ElTree,
+  ElCard
 } from "element-plus"
 const components = [
   ElButton,
@@ -65,7 +67,9 @@ const components = [
   ElTableColumn,
   ElPagination,
   ElImage,
-  ElDialog
+  ElDialog,
+  ElTree,
+  ElCard
 ]
 
 export default function registerElement(app: App): void {
