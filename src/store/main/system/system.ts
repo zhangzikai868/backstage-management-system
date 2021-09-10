@@ -19,7 +19,11 @@ const systemModule: Module<ISystemState, IRootStore> = {
       goodsList: [],
       goodsCount: 0,
       menuList: [],
-      menuCount: 0
+      menuCount: 0,
+      departmentList: [],
+      departmentCount: 0,
+      categoryList: [],
+      categoryCount: 0
     }
   },
   getters: {
@@ -34,6 +38,10 @@ const systemModule: Module<ISystemState, IRootStore> = {
             return state.goodsList
           case "menu":
             return state.menuList
+          case "department":
+            return state.departmentList
+          case "category":
+            return state.categoryList
         }
       }
     },
@@ -48,6 +56,10 @@ const systemModule: Module<ISystemState, IRootStore> = {
             return state.goodsCount
           case "menu":
             return state.menuCount
+          case "department":
+            return state.departmentCount
+          case "category":
+            return state.categoryCount
         }
       }
     }
@@ -76,6 +88,18 @@ const systemModule: Module<ISystemState, IRootStore> = {
     },
     changeMenuCount(store, menuCount: number) {
       store.menuCount = menuCount
+    },
+    changeDepartmentList(store, departmentList: any[]) {
+      store.departmentList = departmentList
+    },
+    changeDepartmentCount(store, departmentCount: number) {
+      store.departmentCount = departmentCount
+    },
+    changeCategoryList(store, categoryList: any[]) {
+      store.categoryList = categoryList
+    },
+    changeCategoryCount(store, categoryCount: number) {
+      store.categoryCount = categoryCount
     }
   },
   actions: {
@@ -95,6 +119,12 @@ const systemModule: Module<ISystemState, IRootStore> = {
           break
         case "menu":
           pageUrl = "/menu/list"
+          break
+        case "department":
+          pageUrl = "/department/list"
+          break
+        case "category":
+          pageUrl = "/category/list"
           break
       }
       // 2.对页面发送请求
@@ -117,6 +147,14 @@ const systemModule: Module<ISystemState, IRootStore> = {
         case "menu":
           commit("changeMenuList", list)
           commit("changeMenuCount", totalCount)
+          break
+        case "department":
+          commit("changeDepartmentList", list)
+          commit("changeDepartmentCount", totalCount)
+          break
+        case "category":
+          commit("changeCategoryList", list)
+          commit("changeCategoryCount", totalCount)
           break
       }
     },
