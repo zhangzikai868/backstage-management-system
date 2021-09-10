@@ -1,13 +1,3 @@
-// 根据不同环境使用不同的base_url
-let BASE_URL = ""
-const TIME_OUT = 10000
+export const API_BASE_URL = process.env.VUE_APP_BASE_URL
 
-if (process.env.NODE_ENV === "development") {
-  BASE_URL = "/api"
-} else if (process.env.NODE_ENV === "production") {
-  BASE_URL = "http://152.136.185.210:5000"
-} else {
-  BASE_URL = "2"
-}
-
-export { BASE_URL, TIME_OUT }
+export const TIME_OUT = 10000

@@ -1,10 +1,10 @@
 // service同一出口
 import ZKRequest from "./request/request"
 import localCache from "@/utils/catche"
-import { BASE_URL, TIME_OUT } from "./request/config"
+import { API_BASE_URL, TIME_OUT } from "./request/config"
 
 const zkRequest = new ZKRequest({
-  baseURL: BASE_URL,
+  baseURL: API_BASE_URL,
   timeout: TIME_OUT,
   interceptors: {
     requestInterceptor: (config) => {
