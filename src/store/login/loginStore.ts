@@ -81,6 +81,7 @@ const loginStore: Module<ILoginStore, IRootStore> = {
         commit("changeUserInfo", userInfo)
       }
       const userMenus = localCache.getCache("userMenus")
+
       if (token) {
         commit("changeUserMenus", userMenus)
       }
